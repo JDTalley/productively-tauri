@@ -1,0 +1,33 @@
+.primaryBtn {
+    color: white;
+    background-color: hsl(205, 62%, 49%);
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    margin: 2px;
+}
+
+.primaryBtn:hover {
+    background-color: hsl(205, 62%, 59%);
+}
+
+.primaryBtn:active {
+    background-color: hsl(205, 62%, 49%);
+}
+
+.dangerBtn {
+    color: white;
+    background-color: hsl(1, 45%, 52%);
+    padding: 10px 10px;
+    border: none;
+    border-radius: 5px;
+    margin: 2px;
+}
+
+.dangerBtn:hover {
+    background-color: hsl(1, 45%, 62%);
+}
+
+.dangerBtn:active {
+    background-color: hsl(1, 45%, 52%);
+}

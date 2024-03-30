@@ -1,0 +1,55 @@
+.container {
+    flex-grow: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    padding-bottom: 16px;
+}
+
+.stepsContainer {
+    width: 100%;
+}
+
+.stepButtonGroup {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.stepButton {
+    width: 100%;
+    padding:10px;
+    border: none;
+    color: white;
+    background-color: hsl(205, 0%, 65%);
+}
+
+.stepButton.selected {
+    background-color: hsl(205, 62%, 49%);
+}
+
+.stepButton:hover {
+    background-color: hsl(205, 62%, 55%);
+}
+
+.circleContainer {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+}
+
+.timerText {
+    display: flex;
+    flex-grow: 2;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 40px;
+    /* letter-spacing: 0.1rem; */
+}
