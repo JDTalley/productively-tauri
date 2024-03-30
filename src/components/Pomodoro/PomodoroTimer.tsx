@@ -16,42 +16,47 @@ interface Props {
  * @readonly
  * @enum
  */
-const Modes = { POM: "Pomodoro", SHORT: "Short Break", LONG: "Long Break" };
+enum Mode {
+  POM = "Pomodoro",
+  SHORT = "Short Break",
+  LONG = "Long Break",
+}
+
+//const Modes = { POM: "Pomodoro", SHORT: "Short Break", LONG: "Long Break" };
 
 /**
  * @param {*} config Object storing pomodoro config items {pomodoro, shortBreak, longBreak, interval}
  * @returns PomodoroTimer react component
  */
 function PomodoroTimer({ config }: Props) {
-  const [mode, setMode] = React.useState(Modes.POM);
+  const [mode, setMode] = React.useState(Mode.POM);
   const [interval, setInterval] = React.useState(1);
   const [time, setTime, timerRunning, setTimerRunning] = useCountdownTime(
     config.pomodoro * 60
   );
 
-  // If timer hits zero, check for next step
-  if (time === 0) {
+  function nextStep(mode: Mode) {
     // Check current mode
     switch (mode) {
-      case Modes.POM:
+      case Mode.POM:
         // If less than configured intervals have been completed, short break
         if (interval < config.interval) {
-          setMode(Modes.SHORT);
+          setMode(Mode.SHORT);
           setTime(config.shortBreak * 60);
           // Else long break
         } else {
-          setMode(Modes.LONG);
+          setMode(Mode.LONG);
           setTime(config.longBreak * 60);
         }
         // Progress interval
         setInterval(interval + 1);
         break;
-      case Modes.SHORT:
-        setMode(Modes.POM);
+      case Mode.SHORT:
+        setMode(Mode.POM);
         setTime(config.pomodoro * 60);
         break;
-      case Modes.LONG:
-        setMode(Modes.POM);
+      case Mode.LONG:
+        setMode(Mode.POM);
         setTime(config.pomodoro * 60);
         // Reset interval after long break
         setInterval(1);
@@ -59,6 +64,11 @@ function PomodoroTimer({ config }: Props) {
       default:
         console.log(`Incompatable Mode:${mode}`);
     }
+  }
+
+  // If timer hits zero, check for next step
+  if (time === 0) {
+    nextStep(mode);
   }
 
   // Get minutes and seconds for displaying timer
@@ -69,13 +79,13 @@ function PomodoroTimer({ config }: Props) {
   let percentComplete = 0;
   let configTimeInSecs = 0;
   switch (mode) {
-    case Modes.POM:
+    case Mode.POM:
       configTimeInSecs = config.pomodoro * 60;
       break;
-    case Modes.SHORT:
+    case Mode.SHORT:
       configTimeInSecs = config.shortBreak * 60;
       break;
-    case Modes.LONG:
+    case Mode.LONG:
       configTimeInSecs = config.longBreak * 60;
       break;
     default:
@@ -91,37 +101,46 @@ function PomodoroTimer({ config }: Props) {
         ></ProgressBar>
         <div className={styles.stepButtonGroup}>
           <button
-            className={styles.stepButton}
+            className={
+              mode === Mode.POM
+                ? `${styles.selected} ${styles.stepButton}`
+                : `${styles.stepButton}`
+            }
             name="Select Pomodoro"
             onClick={() => {
-              setMode(Modes.POM);
+              setMode(Mode.POM);
               setTime(config.pomodoro * 60);
             }}
-            //$selected={mode === Modes.POM}
           >
-            {Modes.POM}
+            {Mode.POM}
           </button>
           <button
-            className={styles.stepButton}
+            className={
+              mode === Mode.SHORT
+                ? `${styles.selected} ${styles.stepButton}`
+                : `${styles.stepButton}`
+            }
             name="Select Short Break"
             onClick={() => {
-              setMode(Modes.SHORT);
+              setMode(Mode.SHORT);
               setTime(config.shortBreak * 60);
             }}
-            //$selected={mode === Modes.SHORT}
           >
-            {Modes.SHORT}
+            {Mode.SHORT}
           </button>
           <button
-            className={styles.stepButton}
+            className={
+              mode === Mode.LONG
+                ? `${styles.selected} ${styles.stepButton}`
+                : `${styles.stepButton}`
+            }
             name="Select Long Break"
             onClick={() => {
-              setMode(Modes.LONG);
+              setMode(Mode.LONG);
               setTime(config.longBreak * 60);
             }}
-            //$selected={mode === Modes.LONG}
           >
-            {Modes.LONG}
+            {Mode.LONG}
           </button>
         </div>
       </div>
@@ -132,13 +151,18 @@ function PomodoroTimer({ config }: Props) {
           </div>
         </CircleProgressBar>
       </div>
-      <Button
-        name="Toggle Timer"
-        style="primary"
-        onClick={() => setTimerRunning(!timerRunning)}
-      >
-        {timerRunning ? "Stop" : "Start"}
-      </Button>
+      <div>
+        <Button
+          name="Toggle Timer"
+          style="primary"
+          onClick={() => setTimerRunning(!timerRunning)}
+        >
+          {timerRunning ? "Stop" : "Start"}
+        </Button>
+        <Button name="Next Step" style="primary" onClick={() => nextStep(mode)}>
+          {"Next"}
+        </Button>
+      </div>
     </div>
   );
 }

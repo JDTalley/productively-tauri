@@ -1,5 +1,4 @@
 "use client";
-import { ReactNode } from "react";
 import styles from "./progressBar.module.css";
 
 interface Props {
