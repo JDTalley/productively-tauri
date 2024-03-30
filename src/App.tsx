@@ -1,12 +1,11 @@
 import "./App.css";
-import Pomodoro from './components/Pomodoro';
+import Pomodoro from "./components/Pomodoro";
 
 function App() {
   return (
     <div className="container">
       <h1>Productively</h1>
-
-        <Pomodoro></Pomodoro>
+      <Pomodoro />
     </div>
   );
 }

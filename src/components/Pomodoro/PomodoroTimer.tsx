@@ -1,23 +1,28 @@
-'use client';
-import React from 'react';
-import Button from '../ui/Button';
-import ProgressBar from '../ui/ProgressBar';
-import CircleProgressBar from '../ui/CircleProgressBar';
+"use client";
+import React from "react";
+import { Config } from "./types";
+import Button from "../ui/Button";
+import ProgressBar from "../ui/ProgressBar";
+import CircleProgressBar from "../ui/CircleProgressBar";
 //import { roboto_mono } from '../../fonts';
-import styles from './timer.module.css';
+import styles from "./timer.module.css";
+
+interface Props {
+  config: Config;
+}
 
 /**
  * Enum for timer modes
  * @readonly
  * @enum
  */
-const Modes = { POM: 'Pomodoro', SHORT: 'Short Break', LONG: 'Long Break' };
+const Modes = { POM: "Pomodoro", SHORT: "Short Break", LONG: "Long Break" };
 
 /**
  * @param {*} config Object storing pomodoro config items {pomodoro, shortBreak, longBreak, interval}
  * @returns PomodoroTimer react component
  */
-function PomodoroTimer({ config }) {
+function PomodoroTimer({ config }: Props) {
   const [mode, setMode] = React.useState(Modes.POM);
   const [interval, setInterval] = React.useState(1);
   const [time, setTime, timerRunning, setTimerRunning] = useCountdownTime(
@@ -82,11 +87,12 @@ function PomodoroTimer({ config }) {
     <div className={styles.container}>
       <div className={styles.stepsContainer}>
         <ProgressBar
-          $progress={((interval - 1) / config.interval) * 100}
+          progress={((interval - 1) / config.interval) * 100}
         ></ProgressBar>
         <div className={styles.stepButtonGroup}>
-          <div className={styles.stepButton}
-            name='Select Pomodoro'
+          <button
+            className={styles.stepButton}
+            name="Select Pomodoro"
             onClick={() => {
               setMode(Modes.POM);
               setTime(config.pomodoro * 60);
@@ -94,9 +100,10 @@ function PomodoroTimer({ config }) {
             //$selected={mode === Modes.POM}
           >
             {Modes.POM}
-          </div>
-          <div className={styles.stepButton}
-            name='Select Short Break'
+          </button>
+          <button
+            className={styles.stepButton}
+            name="Select Short Break"
             onClick={() => {
               setMode(Modes.SHORT);
               setTime(config.shortBreak * 60);
@@ -104,9 +111,10 @@ function PomodoroTimer({ config }) {
             //$selected={mode === Modes.SHORT}
           >
             {Modes.SHORT}
-          </div>
-          <div className={styles.stepButton}
-            name='Select Long Break'
+          </button>
+          <button
+            className={styles.stepButton}
+            name="Select Long Break"
             onClick={() => {
               setMode(Modes.LONG);
               setTime(config.longBreak * 60);
@@ -114,7 +122,7 @@ function PomodoroTimer({ config }) {
             //$selected={mode === Modes.LONG}
           >
             {Modes.LONG}
-          </div>
+          </button>
         </div>
       </div>
       <div className={styles.circleContainer}>
@@ -125,10 +133,11 @@ function PomodoroTimer({ config }) {
         </CircleProgressBar>
       </div>
       <Button
-        name='Toggle Timer'
+        name="Toggle Timer"
+        style="primary"
         onClick={() => setTimerRunning(!timerRunning)}
       >
-        {timerRunning ? 'Stop' : 'Start'}
+        {timerRunning ? "Stop" : "Start"}
       </Button>
     </div>
   );
@@ -136,9 +145,9 @@ function PomodoroTimer({ config }) {
 
 /* Helper Functions */
 // Function takes a number and adds padding to match format 00:00
-const padNumber = (number) => {
+const padNumber = (number: number) => {
   if (number < 10) {
-    return '0' + number;
+    return "0" + number;
   } else {
     return number;
   }
@@ -149,7 +158,7 @@ const padNumber = (number) => {
  * @param {seconds} initialTime Optional time in seconds to set the initial timer to
  * @returns time, setTime, timerRunning, setTimerRunning
  */
-function useCountdownTime(initialTime) {
+function useCountdownTime(initialTime: number) {
   const [time, setTime] = React.useState(initialTime || 60);
   const [timerRunning, setTimerRunning] = React.useState(false);
 
@@ -171,7 +180,7 @@ function useCountdownTime(initialTime) {
     }
   }, [timerRunning]);
 
-  return [time, setTime, timerRunning, setTimerRunning];
+  return [time, setTime, timerRunning, setTimerRunning] as const;
 }
 
 export default PomodoroTimer;

@@ -1,2 +1,2 @@
-export * from './CircleProgressBar';
-export { default } from './CircleProgressBar';
+export * from "./CircleProgressBar";
+export { default } from "./CircleProgressBar";

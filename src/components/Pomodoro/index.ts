@@ -1,2 +1,2 @@
-export * from './Pomodoro';
-export { default } from './Pomodoro';
+export * from "./Pomodoro";
+export { default } from "./Pomodoro";
