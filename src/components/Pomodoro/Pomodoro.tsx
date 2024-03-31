@@ -3,6 +3,8 @@ import React from "react";
 import { Config } from "./types";
 import PomodoroTimer from "./PomodoroTimer";
 import Button from "../ui/Button";
+import * as Label from "@radix-ui/react-label";
+import * as Separator from "@radix-ui/react-separator";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGear } from "@fortawesome/free-solid-svg-icons";
 import styles from "./pomodoro.module.css";
@@ -21,31 +23,33 @@ function Pomodoro() {
 
   return (
     <div className={styles.container}>
-      {!isConfigActive && (
-        <button
-          className={styles.buttonConfig}
-          name="Configure Pomodoro"
-          onClick={() => setIsConfigActive(true)}
-        >
-          <FontAwesomeIcon icon={faGear}></FontAwesomeIcon>
-        </button>
-      )}
-      {isConfigActive ? (
+      {!isConfigActive ? (
+        <div className={styles.pomodoro}>
+          <PomodoroTimer config={config}></PomodoroTimer>
+          <button
+            className={styles.buttonConfig}
+            name="Configure Pomodoro"
+            onClick={() => setIsConfigActive(true)}
+          >
+            <FontAwesomeIcon icon={faGear}></FontAwesomeIcon>
+          </button>
+        </div>
+      ) : (
         <div className={styles.pomodoro}>
           <div className={styles.config}>
             <div className={styles.subheader}>
               <h3>Settings</h3>
             </div>
-            <hr className={styles.bottomBorder} />
+            <Separator.Root decorative className={styles.bottomBorder} />
             <div className={styles.configGroup}>
               <div className={styles.subheader}>
                 <h4>Time (minutes)</h4>
               </div>
               <div className={styles.configGroupInline}>
                 <div className={styles.configItemInline}>
-                  <label className={styles.labelInline} htmlFor="pomodoro">
+                  <Label.Root className={styles.labelInline} htmlFor="pomodoro">
                     Pomdoro
-                  </label>
+                  </Label.Root>
                   <input
                     className={styles.inputNumber}
                     id="pomodoro"
@@ -61,9 +65,12 @@ function Pomodoro() {
                   ></input>
                 </div>
                 <div className={styles.configItemInline}>
-                  <label className={styles.labelInline} htmlFor="shortBreak">
+                  <Label.Root
+                    className={styles.labelInline}
+                    htmlFor="shortBreak"
+                  >
                     Short Break
-                  </label>
+                  </Label.Root>
                   <input
                     className={styles.inputNumber}
                     id="shortBreak"
@@ -79,9 +86,12 @@ function Pomodoro() {
                   ></input>
                 </div>
                 <div className={styles.configItemInline}>
-                  <label className={styles.labelInline} htmlFor="longBreak">
+                  <Label.Root
+                    className={styles.labelInline}
+                    htmlFor="longBreak"
+                  >
                     Long Break
-                  </label>
+                  </Label.Root>
                   <input
                     className={styles.inputNumber}
                     id="longBreak"
@@ -101,10 +111,9 @@ function Pomodoro() {
             <div className={styles.configGroup}>
               <div className={styles.configItemInline}>
                 <div className={styles.subheader}>
-                  <h4>
-                    <label htmlFor="interval">Long Break Interval</label>
-                  </h4>
+                  <h4>Interval</h4>
                 </div>
+                <Label.Root htmlFor="interval">Long Break</Label.Root>
                 <input
                   className={styles.inputNumber}
                   id="interval"
@@ -154,10 +163,6 @@ function Pomodoro() {
               </Button>
             </div>
           </div>
-        </div>
-      ) : (
-        <div className={styles.pomodoro}>
-          <PomodoroTimer config={config}></PomodoroTimer>
         </div>
       )}
     </div>
