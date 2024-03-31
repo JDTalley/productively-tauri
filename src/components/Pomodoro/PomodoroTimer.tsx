@@ -49,16 +49,19 @@ function PomodoroTimer({ config }: Props) {
         }
         // Progress interval
         setInterval(interval + 1);
+        setTimerRunning(false);
         break;
       case Mode.SHORT:
         setMode(Mode.POM);
         setTime(config.pomodoro * 60);
+        setTimerRunning(false);
         break;
       case Mode.LONG:
         setMode(Mode.POM);
         setTime(config.pomodoro * 60);
         // Reset interval after long break
         setInterval(1);
+        setTimerRunning(false);
         break;
       default:
         console.log(`Incompatable Mode:${mode}`);
@@ -75,7 +78,6 @@ function PomodoroTimer({ config }: Props) {
   const seconds = time - Math.floor(time / 60) * 60;
 
   // Get percentage of timer completion for circle progress bar
-  let percentComplete = 0;
   let configTimeInSecs = 0;
   switch (mode) {
     case Mode.POM:
@@ -90,7 +92,6 @@ function PomodoroTimer({ config }: Props) {
     default:
       console.log(`Incompatable Mode:${mode}`);
   }
-  percentComplete = ((configTimeInSecs - time) / configTimeInSecs) * 100;
 
   return (
     <div className={styles.container}>
@@ -144,7 +145,7 @@ function PomodoroTimer({ config }: Props) {
         </div>
       </div>
       <div className={styles.circleContainer}>
-        <CircleProgressBar progress={percentComplete}>
+        <CircleProgressBar progress={time} max={configTimeInSecs}>
           <div className={styles.timerText}>
             {padNumber(minutes)}:{padNumber(seconds)}
           </div>

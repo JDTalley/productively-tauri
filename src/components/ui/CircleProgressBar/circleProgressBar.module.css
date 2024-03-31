@@ -1,4 +1,8 @@
-.container {
+.progressRoot {
+  width: 100%;
+}
+
+.progressIndicator {
   width: 100%;
   display: flex;
   position: relative;
