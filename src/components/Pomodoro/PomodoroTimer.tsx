@@ -4,7 +4,6 @@ import { Config } from "./types";
 import Button from "../ui/Button";
 import ProgressBar from "../ui/ProgressBar";
 import CircleProgressBar from "../ui/CircleProgressBar";
-//import { roboto_mono } from '../../fonts';
 import styles from "./timer.module.css";
 
 interface Props {

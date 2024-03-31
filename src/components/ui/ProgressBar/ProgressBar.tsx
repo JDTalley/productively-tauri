@@ -1,5 +1,6 @@
 "use client";
 import styles from "./progressBar.module.css";
+import * as Progress from "@radix-ui/react-progress";
 
 interface Props {
   progress: number;
@@ -10,15 +11,14 @@ interface Props {
  * @prop percentComplete
  */
 function ProgressBar({ progress }: Props) {
-  const progressStyle = {
-    background: `linear-gradient(
-      to right,
-      hsl(205, 62%, 49%) ${progress}%,
-      hsl(205, 0%, 55%) 0
-    )`,
-  };
-
-  return <div style={progressStyle} className={styles.container}></div>;
+  return (
+    <Progress.Root className={styles.progressRoot} value={progress}>
+      <Progress.Indicator
+        className={styles.progressIndicator}
+        style={{ transform: `translateX(-${100 - progress}%)` }}
+      ></Progress.Indicator>
+    </Progress.Root>
+  );
 }
 
 export default ProgressBar;

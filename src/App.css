@@ -1,7 +1,15 @@
-.logo.vite:hover {
-  filter: drop-shadow(0 0 2em #747bff);
+@font-face {
+  font-family: "Roboto-Mono";
+  src: local("Roboto-Mono"),
+    url(./assets/fonts/RobotoMono-VariableFont_wght.ttf) format("truetype");
 }
 
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafb);
+* {
+  font-family: Roboto-Mono, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }

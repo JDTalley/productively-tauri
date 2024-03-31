@@ -3,8 +3,8 @@ import React from "react";
 import { Config } from "./types";
 import PomodoroTimer from "./PomodoroTimer";
 import Button from "../ui/Button";
-//import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-//import { faGear } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGear } from "@fortawesome/free-solid-svg-icons";
 import styles from "./pomodoro.module.css";
 
 const defaultConfig: Config = {
@@ -26,7 +26,9 @@ function Pomodoro() {
           className={styles.buttonConfig}
           name="Configure Pomodoro"
           onClick={() => setIsConfigActive(true)}
-        ></button>
+        >
+          <FontAwesomeIcon icon={faGear}></FontAwesomeIcon>
+        </button>
       )}
       {isConfigActive ? (
         <div className={styles.pomodoro}>
