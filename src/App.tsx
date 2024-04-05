@@ -5,7 +5,7 @@ import Pomodoro from "./components/Pomodoro";
 function App() {
   return (
     <div className={styles.container}>
-      <Pomodoro />
+      <Pomodoro></Pomodoro>
     </div>
   );
 }

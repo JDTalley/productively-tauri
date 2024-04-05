@@ -19,66 +19,6 @@
   padding: 8px 16px;
 }
 
-.subheader {
-  padding: 8px 0;
-}
-
-.bottomBorder {
-  border: 1px solid hsl(205, 0%, 95%);
-}
-
-.config {
-  padding: 0 16px;
-}
-
-.configGroup {
-  display: flex;
-  flex-direction: column;
-  padding: 12px 0;
-  /* justify-content: center; */
-}
-
-.configGroupInline {
-  display: flex;
-  justify-content: space-between;
-}
-
-.configItemInline {
-  width: 100px;
-}
-
-.labelInline {
-  font-size: 0.875rem;
-}
-
-.configItem {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.inputNumber {
-  width: min(100px, 100%);
-  padding: 8px;
-  /* margin: 0 16px; */
-  /* width: 72px; */
-  border: none;
-  border-radius: 4px;
-  background-color: hsl(205, 0%, 95%);
-}
-
-.buttonGroup {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  padding: 16px 0;
-  background-color: hsl(205, 0%, 95%);
-}
-
-.buttonSpacing {
-  padding: 0 16px;
-}
-
 .buttonConfig {
   padding: 0;
   font-size: 18px;

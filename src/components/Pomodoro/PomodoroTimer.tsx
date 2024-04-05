@@ -5,6 +5,7 @@ import Button from "../ui/Button";
 import ProgressBar from "../ui/ProgressBar";
 import CircleProgressBar from "../ui/CircleProgressBar";
 import styles from "./timer.module.css";
+import useCountdownTime from "../../hooks/useCountdownTime";
 
 interface Props {
   config: Config;
@@ -78,19 +79,18 @@ function PomodoroTimer({ config }: Props) {
   const seconds = time - Math.floor(time / 60) * 60;
 
   // Get percentage of timer completion for circle progress bar
-  let configTimeInSecs = 0;
-  switch (mode) {
-    case Mode.POM:
-      configTimeInSecs = config.pomodoro * 60;
-      break;
-    case Mode.SHORT:
-      configTimeInSecs = config.shortBreak * 60;
-      break;
-    case Mode.LONG:
-      configTimeInSecs = config.longBreak * 60;
-      break;
-    default:
-      console.log(`Incompatable Mode:${mode}`);
+  function getConfigTime(mode: Mode, config: Config) {
+    switch (mode) {
+      case Mode.POM:
+        return config.pomodoro * 60;
+      case Mode.SHORT:
+        return config.shortBreak * 60;
+      case Mode.LONG:
+        return config.longBreak * 60;
+      default:
+        console.log(`Incompatable Mode:${mode}`);
+        return 60;
+    }
   }
 
   return (
@@ -145,7 +145,7 @@ function PomodoroTimer({ config }: Props) {
         </div>
       </div>
       <div className={styles.circleContainer}>
-        <CircleProgressBar progress={time} max={configTimeInSecs}>
+        <CircleProgressBar progress={time} max={getConfigTime(mode, config)}>
           <div className={styles.timerText}>
             {padNumber(minutes)}:{padNumber(seconds)}
           </div>
@@ -176,35 +176,5 @@ const padNumber = (number: number) => {
     return number;
   }
 };
-
-/**
- *
- * @param {seconds} initialTime Optional time in seconds to set the initial timer to
- * @returns time, setTime, timerRunning, setTimerRunning
- */
-function useCountdownTime(initialTime: number) {
-  const [time, setTime] = React.useState(initialTime || 60);
-  const [timerRunning, setTimerRunning] = React.useState(false);
-
-  React.useEffect(() => {
-    if (timerRunning) {
-      const intervalId = window.setInterval(() => {
-        setTime((oldTime) => {
-          const newTime = oldTime - 1;
-          if (newTime === 0) {
-            setTimerRunning(false);
-          }
-          return newTime;
-        });
-      }, 1000);
-
-      return () => {
-        window.clearInterval(intervalId);
-      };
-    }
-  }, [timerRunning]);
-
-  return [time, setTime, timerRunning, setTimerRunning] as const;
-}
 
 export default PomodoroTimer;
