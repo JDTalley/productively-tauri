@@ -1,0 +1,13 @@
+.navigationMenuRoot {
+  display: flex;
+  width: 100vw;
+  z-index: 1;
+}
+
+.navigationMenuList {
+  display: flex;
+}
+
+.navigationMenuItem {
+  text-decoration: none;
+}
